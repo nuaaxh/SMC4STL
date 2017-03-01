@@ -16,7 +16,7 @@ public class Main {
 				if (args[0].equals("-h") || args[0].equals("--h") || args[0].equals("-help")
 						|| args[0].equals("--help")) {
 					System.out
-							.println("Usage:  java -jar STLSMC-<version>.jar <directory_of_csv_traces> <property_to_check>");
+							.println("Usage:  java -jar SMC4STL-<version>.jar <directory_of_csv_traces> <property_to_check>");
 					return;
 				}
 				String property = args[1];
@@ -44,7 +44,7 @@ public class Main {
 			else {
 				System.out.println("Incorrect number of arguments.");
 				System.out
-						.println("Usage:  java -jar STLSMC-<version>.jar <directory_of_csv_traces> <property_to_check>");
+						.println("Usage:  java -jar SMC4STL-<version>.jar <directory_of_csv_traces> <property_to_check>");
 			}
 		}
 		catch (IOException e) {
