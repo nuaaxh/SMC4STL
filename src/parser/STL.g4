@@ -1,5 +1,9 @@
 grammar STL;
 
+@header {
+package parser;
+}
+
 property:	'('property')'
 	|	'!('property')'
 	|	boolean_expr
