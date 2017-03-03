@@ -1,12 +1,20 @@
 package main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import checker.STLChecker;
+import parser.STLAbstractSyntaxTreeExtractor;
+import parser.STLLexer;
+import parser.STLParser;
+import stl.TreeNode;
+
 import data.Trace;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 public class Main {
 
@@ -53,13 +61,13 @@ public class Main {
 		}
 	}
 
-	public static double getRobustness(String trace, String property) throws IOException {
-		return getRobustness(Trace.parseCSV(trace), property);
-	}
-
-	public static double getRobustness(Trace trace, String property) {
-		STLChecker check = new STLChecker(trace);
-		return check.robustness(property);
+	public static double getRobustness(String trace, String property) throws FileNotFoundException {
+		STLLexer lexer = new STLLexer(new ANTLRInputStream(property));
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		STLParser parser = new STLParser(tokens);
+		ParserRuleContext t = parser.property();
+		TreeNode ast = new STLAbstractSyntaxTreeExtractor().visit(t);
+		return ast.robustness(Trace.parseCSV(trace), 0);
 	}
 
 	public static double computeSatisfyingPercent(List<String> traces, String property) throws IOException {
