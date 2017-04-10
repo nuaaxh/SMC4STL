@@ -47,10 +47,16 @@ public class Main {
 							}
 						}
 						double satisfyingPercent = computeSatisfyingPercent(traceFiles, property);
-						System.out.println((satisfyingPercent * 100) + "% of traces satisfy the property.");
-						System.out.println("The true satisfying percentage is within "
-								+ (computeError(satisfyingPercent, traceFiles.size(), confidenceInterval) * 100)
-								+ "% of this value with " + (confidenceInterval*100) + "% confidence.");
+						double error = computeError(satisfyingPercent, traceFiles.size(), confidenceInterval);
+						System.out.printf("%.2f", (satisfyingPercent * 100));
+						System.out.println("% of traces satisfy the property.");
+						System.out.print("The true satisfying percentage is between ");
+						System.out.printf("%.2f", Math.max(((satisfyingPercent - error) * 100), 0.0));
+						System.out.print("% and ");
+						System.out.printf("%.2f", Math.min(((satisfyingPercent + error) * 100), 100.0));
+						System.out.print("% with ");
+						System.out.printf("%.2f", (confidenceInterval * 100));
+						System.out.println("% confidence.");
 					}
 				}
 			}
